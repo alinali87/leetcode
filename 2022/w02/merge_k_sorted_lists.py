@@ -1,7 +1,26 @@
 # https://leetcode.com/problems/merge-k-sorted-lists/
 from typing import List, Optional
 
-def make_linked_list(lst):
+
+# Definition for singly-linked list.
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+
+def list_to_values(head: Optional[ListNode]) -> list:
+    if head is None:
+        return None
+    res = [head.val]
+    node = head
+    while node.next:
+        res.append(node.next.val)
+        node = node.next
+    return res
+
+
+def array_to_list(lst):
     if len(lst) == 0:
         return None
     node = ListNode(lst[0])
@@ -12,17 +31,21 @@ def make_linked_list(lst):
     return head
 
 
-def find_min(lists):
-    min_i = 0
-    min_node = ListNode(float('inf'))
-    for i in range(len(lists)):
-        if lists[i] is not None:
-            if lists[i].val < min_node.val:
-                min_node = lists[i]
-                min_i = i
-    return min_node, min_i
+def find_min(heads) -> ListNode:
+    min_ind = 0
+    min_node = heads[0]
+    for i in range(1, len(heads)):
+        if heads[i].val < min_node.val:
+            min_node = heads[i]
+            min_ind = i
+    if heads[min_ind].next is not None:
+        heads[min_ind] = heads[min_ind].next
+    else:
+        heads.pop(min_ind)
+    return min_node
 
-def lists_to_linked_list(result):
+
+def make_links(result):
     if len(result) == 0:
         return None
     node = result[0]
@@ -33,41 +56,42 @@ def lists_to_linked_list(result):
     return head
 
 
+class Solution:
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        # remove empty lists
+        for i in range(len(lists) - 1, -1, -1):
+            if lists[i] is None:
+                lists.pop(i)
+        if len(lists) < 1:
+            return None
+        result = []
+        while len(lists) > 0:
+            min_node = find_min(lists)
+            min_node.next = None
+            result.append(min_node)
+        result = make_links(result)
+        return result
 
 
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
-# class Solution:
-def mergeKLists(lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-    result = []
-    if len(lists) < 1:
-        return None
-    while len(lists) > 0:
-        min_node, i = find_min(lists)
-        try:
-            lists[i] = lists[i].next
-        except AttributeError:
-            pass
-        if lists[i] is None:
-            lists.pop(i)
-        min_node.next = None
-        # if len(result) > 0:
-        #     result[-1].next = min_node
-        result.append(min_node)
-    result = lists_to_linked_list(result)
-    return result
+# test
+def test_1():
+    s = Solution()
+    a = array_to_list([1, 4, 5])
+    b = array_to_list([1, 3, 4])
+    c = array_to_list([2, 6])
+    lists = [a, b, c]
+    assert list_to_values(s.mergeKLists(lists)) == [1, 1, 2, 3, 4, 4, 5, 6]
 
 
+def test_2():
+    s = Solution()
+    a = array_to_list([])
+    b = array_to_list([])
+    lists = [a, b]
+    assert s.mergeKLists(lists) is None
 
 
 if __name__ == "__main__":
-    a = make_linked_list([1, 4, 5])
-    b = make_linked_list([1, 3, 4])
-    c = make_linked_list([2, 6])
-    d = make_linked_list([])
-    lists = [a, b, c]
-    print(mergeKLists(lists))
+    # test_1()
+    test_2()
 
