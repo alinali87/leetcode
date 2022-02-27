@@ -27,12 +27,13 @@ class Solution:
 
 
 def test():
-    # root = [1, 2, 3, null, 5]
+    # root = [1, 2, 3, 4, 5]
+    node4 = TreeNode(4, None, None)
     node5 = TreeNode(5, None, None)
     node3 = TreeNode(3, None, None)
-    node2 = TreeNode(2, None, node5)
+    node2 = TreeNode(2, node4, node5)
     node1 = TreeNode(1, node2, node3)
 
     s = Solution()
-    
+
     print(s.inorderTraversal(node1))
