@@ -10,20 +10,16 @@ class TreeNode:
 
 
 class Solution:
-    def helper(self, node, result):
-        if node.left:
-            self.helper(node.left, result)
-        result.append(node.val)
-        if node.right:
-            self.helper(node.right, result)
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        def recurse(node):
+            out = []
+            if node:
+                out += recurse(node.left)
+                out.append(node.val)
+                out += recurse(node.right)
+            return out
 
-    def inorderTraversal(self, root):
-        if root:
-            ans = []
-        else:
-            return []
-        self.helper(root, ans)
-        return ans
+        return recurse(root)
 
 
 def test():
@@ -34,5 +30,8 @@ def test():
     node1 = TreeNode(1, node2, node3)
 
     s = Solution()
-    
+
     print(s.inorderTraversal(node1))
+
+
+test()
