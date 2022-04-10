@@ -8,11 +8,8 @@ class Solution:
         for num in nums:
             summ += num
             res = max(summ, res)
-            if summ <= 0:
-                summ = 0
+            summ = max(summ, 0)
         return res
-
-
 
 
 def test():
