@@ -3,12 +3,11 @@ from typing import List
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        res = nums[0]
-        summ = 0
+        res = nums[0]  # store the best subarray sum found
+        cum_sum = 0  # best cumulative sum with the end at current position
         for num in nums:
-            summ += num
-            res = max(summ, res)
-            summ = max(summ, 0)
+            cum_sum = max(cum_sum + num, num)
+            res = max(cum_sum, res)
         return res
 
 
