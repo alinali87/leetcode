@@ -1,5 +1,6 @@
-#input file for testing
+#input/output file for testing
 input.txt
+output.txt
 
 #Pycharm
 .idea/
