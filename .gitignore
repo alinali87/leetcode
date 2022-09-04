@@ -1,6 +1,6 @@
 #input/output file for testing
-input.txt
-output.txt
+input*.txt
+output*.txt
 
 #Pycharm
 .idea/
