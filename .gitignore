@@ -2,6 +2,9 @@
 input*.txt
 output*.txt
 
+# Other
+env
+
 #Pycharm
 .idea/
 
