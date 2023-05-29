@@ -1,4 +1,6 @@
-#input/output file for testing
+# testing
+.pytest_cache
+__pycache__
 input*.txt
 output*.txt
 
